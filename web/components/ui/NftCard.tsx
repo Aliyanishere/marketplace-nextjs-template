@@ -46,7 +46,7 @@ const NFTCard: React.FC<NFTCardProps> = ({
       </button> */}
 
       {/* Buy Now */}
-      {nft.listing.price != null && connectedWallet != nft.listing.seller && (
+      {nft.listing?.price != null && connectedWallet != nft?.listing?.seller && (
         <div>
           <p className='my-2'>
             {Number(Number(nft.listing.price) / LAMPORTS_PER_SOL).toPrecision(

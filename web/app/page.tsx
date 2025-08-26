@@ -1,13 +1,15 @@
 'use client';
 import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import {
+  WalletModalProvider,
+  WalletMultiButton,
+} from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import NFTCard from '@/components/ui/NftCard';
-import { WalletButton } from '@/components/solana/solana-provider';
 import { Connection, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { useSearchParams } from 'next/navigation';
-// import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface LastSale {}
 
@@ -80,7 +82,7 @@ export default function Home() {
     axios
       .get('api/collectionListings', {
         params: {
-          collectionSlug: process.env.NEXT_PUBLIC_COLLECTION_SLUG!,
+          collectionId: 'bd366797-5599-417a-be03-1e43a7e3fb90',
           limit: mint ? 1 : 10,
           cursor,
           mint,
@@ -145,15 +147,15 @@ export default function Home() {
 
   return (
     <WalletModalProvider>
-      <main className="flex flex-grow flex-col items-center pt-4">
-        <h1 className="text-4xl font-bold mb-4">NFT Marketplace</h1>
-        <div className="mb-4">
-          <WalletButton />
-          <p className="text-sm pt-2">Balance: {balance}</p>
-        </div>
+      <main className="flex flex-grow flex-col items-center">
+        <header className="flex justify-between items-center w-4/5 my-8">
+          <WalletMultiButton />
+          <h1 className="text-4xl font-bold">NFT Marketplace</h1>
+          <p className="text-sm">Balance: {balance}</p>
+        </header>
 
         {stats != null && (
-          <div className="mb-4 w-4/5 text-sm">
+          <div className="mt-10 mb-4 w-4/5 text-sm">
             <div className="grid grid-cols-4 gap-4 text-center text-small">
               <div className="stats-box  p-4">
                 <h2 className="text-lg font-bold">Total NFTs</h2>
@@ -177,7 +179,7 @@ export default function Home() {
           </div>
         )}
         <div className="flex w-4/5">
-          {/* <InfiniteScroll
+          <InfiniteScroll
             dataLength={nfts.length} //This is important field to render the next data
             next={() => fetchData(cursor)}
             hasMore={hasMore}
@@ -187,8 +189,9 @@ export default function Home() {
                 <b>Yay! You have seen it all</b>
               </p>
             }
-          > */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+          >
+            {/* <div className=> */}
             {nfts.map((nft: Nft) => (
               <NFTCard
                 connectedWallet={String(wallet.publicKey?.toBase58())}
@@ -199,8 +202,8 @@ export default function Home() {
                 signAllTransactions={wallet.signAllTransactions}
               />
             ))}
-          </div>
-          {/* </InfiniteScroll> */}
+            {/* </div> */}
+          </InfiniteScroll>
         </div>
       </main>
     </WalletModalProvider>

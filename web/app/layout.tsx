@@ -2,7 +2,7 @@ import 'nes.css/css/nes.min.css';
 import './global.css';
 import { UiLayout } from '@/components/ui/ui-layout';
 import { ClusterProvider } from '@/components/cluster/cluster-data-access';
-import { SolanaProvider } from '@/components/solana/solana-provider';
+import { SolanaWalletProvider } from '@/components/solana/solana-provider';
 import { Provider } from './provider';
 
 export const metadata = {
@@ -26,9 +26,9 @@ export default function RootLayout({
       <body>
         <Provider>
           <ClusterProvider>
-            <SolanaProvider>
+            <SolanaWalletProvider>
               <UiLayout>{children}</UiLayout>
-            </SolanaProvider>
+            </SolanaWalletProvider>
           </ClusterProvider>
         </Provider>
       </body>

@@ -4,19 +4,19 @@ export async function GET(request: Request) {
   console.log('[API] collectionListings called!');
 
   const userParams = new URLSearchParams(request.url.split('?')[1]);
-  const { collectionSlug, limit, cursor, mint } = Object.fromEntries(
+  const { collectionId, limit, cursor, mint } = Object.fromEntries(
     userParams.entries()
   );
 
   // Debugging
-  // console.log('collectionSlug: ', collectionSlug);
+  // console.log('collectionId: ', collectionId);
   // console.log('limit: ', limit);
   // console.log('cursor: ', cursor);
   // console.log('mint: ', mint);
 
   const url = `https://api.mainnet.tensordev.io/api/v1/mint/collection`;
   const queryParams = new URLSearchParams();
-  queryParams.append('slug', collectionSlug);
+  queryParams.append('collId', collectionId);
   queryParams.append('sortBy', 'ListingPriceAsc');
   queryParams.append('limit', limit);
   if (cursor) {
